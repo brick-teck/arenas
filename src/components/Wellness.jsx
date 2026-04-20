@@ -5,8 +5,9 @@ import MassageBg from '../assets/massage-bg.png';
 
 export default function Wellness() {
   return (
-    <section className="wellness">
+    <section id="bem-estar" className="wellness">
       <div className="wellness-container">
+
 
         {/* TÍTULO */}
         <p className="wellness-subtitle">Muito além das quadras</p>
