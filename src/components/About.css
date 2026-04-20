@@ -1,0 +1,129 @@
+/* ABOUT / SOBRE */
+.about {
+  width: 100%;
+  padding: 6rem 2rem;
+  background-color: #0c0a09; /* stone-950 — neutro escuro */
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+/* TEXTO PRINCIPAL */
+.about-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 680px;
+}
+
+.about-label {
+  color: #10b981; /* emerald-500 */
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.about-title {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  color: #fafaf9;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.about-title span {
+  color: #34d399; /* emerald-400 */
+}
+
+.about-text {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #78716c; /* stone-500 */
+}
+
+/* PILARES — cards com efeito vidro esverdeado */
+.about-pillars {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .about-pillars {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.pillar-card {
+  background-color: rgba(6, 78, 59, 0.15); /* emerald-950 sutil */
+  border: 1px solid rgba(6, 78, 59, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.pillar-card:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateY(-4px);
+}
+
+.pillar-icon {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 1.25rem;
+  color: #10b981; /* emerald-500 */
+}
+
+.pillar-card h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fafaf9;
+  margin-bottom: 0.6rem;
+}
+
+.pillar-card p {
+  color: #78716c; /* stone-500 */
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+/* NÚMEROS — texto limpo sem cards, direto no fundo escuro */
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 3rem;
+}
+
+@media (min-width: 768px) {
+  .about-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #fafaf9;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #10b981; /* emerald-500 */
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
