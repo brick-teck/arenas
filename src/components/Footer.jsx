@@ -43,9 +43,9 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Bem-Estar</h4>
             <ul>
-              <li><a href="#bem-estar">Academia</a></li>
-              <li><a href="#bem-estar">Pilates</a></li>
-              <li><a href="#bem-estar">Massagem</a></li>
+              <li><a href="#academia">Academia</a></li>
+              <li><a href="#pilates">Pilates</a></li>
+              <li><a href="#massagem">Massagem</a></li>
             </ul>
           </div>
 

@@ -22,7 +22,7 @@ export default function Wellness() {
         <div className="wellness-grid">
 
           {/* ACADEMIA */}
-          <div className="wellness-card card-top">
+          <div id="academia" className="wellness-card card-top">
             <img src={GymBg} alt="Academia" />
             <div className="card-overlay"></div>
             <span className="card-badge">Academia</span>
@@ -33,7 +33,7 @@ export default function Wellness() {
           </div>
 
           {/* PILATES */}
-          <div className="wellness-card card-top">
+          <div id="pilates" className="wellness-card card-top">
             <img src={PilatesBg} alt="Pilates" />
             <div className="card-overlay"></div>
             <span className="card-badge">Pilates</span>
@@ -44,7 +44,7 @@ export default function Wellness() {
           </div>
 
           {/* MASSAGEM */}
-          <div className="wellness-card card-bottom">
+          <div id="massagem" className="wellness-card card-bottom">
             <img src={MassageBg} alt="Spa e Recuperação" />
             <div className="card-overlay-solid"></div>
             <div className="massage-content">
