@@ -1,67 +1,79 @@
-import { useState } from 'react';
-import './Header.css';
-import logo from '../assets/logo_sf.png';
+import { useEffect, useRef, useState } from "react";
+import Brand from "./Brand";
+import Icon from "./Icon";
+import "./Header.css";
+
+const links = [
+  ["Modalidades", "#atividades"],
+  ["Bem-estar", "#bem-estar"],
+  ["O clube", "#sobre"],
+];
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const menuItems = [
-    { name: 'Início', href: '#inicio' },
-    { name: 'Atividades', href: '#atividades' },
-    { name: 'Bem-Estar', href: '#bem-estar' },
-    { name: 'Sobre', href: '#sobre' },
-    { name: 'Contato', href: '#contato' },
-
-  ];
-
+  const toggle = useRef(null);
+  useEffect(() => {
+    const close = (event) => {
+      if (event.key === "Escape" && isOpen) {
+        setIsOpen(false);
+        toggle.current?.focus();
+      }
+    };
+    const query = window.matchMedia("(min-width: 901px)");
+    const resize = () => {
+      if (query.matches) setIsOpen(false);
+    };
+    document.addEventListener("keydown", close);
+    query.addEventListener("change", resize);
+    return () => {
+      document.removeEventListener("keydown", close);
+      query.removeEventListener("change", resize);
+    };
+  }, [isOpen]);
   return (
     <header className="header">
-      <div className="header-container">
-
-        {/* Logo */}
-        <a href="#" className="header-logo">
-          <img src={logo} alt="Vila Reserva Club" />
-        </a>
-
-        {/* Navegação Desktop */}
-        <nav className="header-nav">
-          {menuItems.map((item) => (
-            <a key={item.name} href={item.href}>
-              {item.name}
+      <div className="header-container container">
+        <Brand />
+        <nav className="header-nav" aria-label="Navegação principal">
+          {links.map(([label, href]) => (
+            <a href={href} key={href}>
+              {label}
             </a>
           ))}
         </nav>
-
-        {/* Botão CTA */}
-        <button className="header-cta">Agendar Visita</button>
-
-        {/* Botão Hamburguer (Mobile) */}
+        <a className="button button-pine header-cta" href="#contato">
+          Agendar visita <Icon name="arrow" />
+        </a>
         <button
+          ref={toggle}
           className="header-hamburger"
+          aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={isOpen}
+          aria-controls="mobile-nav"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            {isOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-            )}
-          </svg>
+          <Icon name={isOpen ? "close" : "menu"} />
         </button>
-
       </div>
-
-      {/* Menu Mobile */}
-      {isOpen && (
-        <div className="header-mobile-menu">
-          {menuItems.map((item) => (
-            <a key={item.name} href={item.href} onClick={() => setIsOpen(false)}>
-              {item.name}
-            </a>
-          ))}
-          <button className="header-mobile-cta">Agendar Visita</button>
-        </div>
-      )}
+      <nav
+        id="mobile-nav"
+        className="header-mobile-menu"
+        aria-label="Navegação móvel"
+        hidden={!isOpen}
+      >
+        {links.map(([label, href]) => (
+          <a href={href} key={href} onClick={() => setIsOpen(false)}>
+            {label}
+          </a>
+        ))}
+        <a
+          className="button button-pine"
+          href="#contato"
+          onClick={() => setIsOpen(false)}
+        >
+          Agendar visita <Icon name="arrow" />
+        </a>
+      </nav>
     </header>
   );
 }

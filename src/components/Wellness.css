@@ -1,243 +1,135 @@
-/* WELLNESS BENTO GRID */
 .wellness {
-  width: 100%;
-  padding: 4rem 1rem;
-  background-color: #1c1917; /* stone-900 */
+  background: var(--soft);
 }
-
-@media (min-width: 768px) {
-  .wellness {
-    padding: 5rem 2rem;
-  }
-}
-
-.wellness-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* TÍTULO */
-.wellness-subtitle {
-  color: #10b981;
-  font-weight: 700;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: 0.75rem;
-  text-align: center;
-}
-
-.wellness-title {
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  font-weight: 900;
-  color: #fafaf9;
-  text-align: center;
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.03em;
-}
-
-.wellness-title span {
-  color: #34d399;
-}
-
-.wellness-desc {
-  color: #78716c; /* stone-500 */
-  font-size: 1rem;
-  text-align: center;
-  max-width: 580px;
-  margin: 0 auto 3rem auto;
-  line-height: 1.7;
-}
-
-/* GRID */
 .wellness-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
 }
-
-@media (min-width: 768px) {
-  .wellness-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-/* CARD BASE */
 .wellness-card {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  min-width: 0;
+  background: var(--mineral);
 }
-
-.wellness-card img {
-  position: absolute;
-  inset: 0;
+.wellness-image {
+  position: relative;
+  aspect-ratio: 1.16;
+  overflow: hidden;
+}
+.wellness-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  transition: transform 0.7s ease;
+  transition: transform 0.5s;
 }
-
-.wellness-card:hover img {
-  transform: scale(1.05);
+.wellness-card:focus-within .wellness-image img,
+.wellness-card:hover .wellness-image img {
+  transform: scale(1.035);
 }
-
-/* CARDS SUPERIORES (Academia + Pilates) */
-.card-top {
-  height: 280px;
-}
-
-@media (min-width: 768px) {
-  .card-top {
-    height: 400px;
-  }
-}
-
-/* CARD INFERIOR (Massagem - largura total) */
-.card-bottom {
-  min-height: 280px;
-  height: auto;
-}
-
-@media (min-width: 768px) {
-  .card-bottom {
-    grid-column: span 2;
-    min-height: 300px;
-  }
-}
-
-/* OVERLAY GRADIENTE */
-.card-overlay {
+.wellness-image > span {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(12, 10, 9, 0.95), rgba(12,10,9, 0.3), transparent);
-  pointer-events: none;
+  top: 18px;
+  left: 18px;
+  background: var(--mineral);
+  color: var(--pine);
+  padding: 8px 11px;
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
 }
-
-.card-overlay-solid {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(12, 10, 9, 0.7);
-}
-
-/* BADGE */
-.card-badge {
-  position: absolute;
-  top: 1.25rem;
-  left: 1.25rem;
-  background-color: #10b981;
-  color: #0c0a09;
-  font-size: 0.7rem;
-  font-weight: 800;
-  padding: 0.3rem 0.85rem;
-  border-radius: 9999px;
-  z-index: 5;
-}
-
-/* TEXTO DENTRO DO CARD */
-.card-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 2rem;
-  z-index: 5;
-}
-
-.card-content h3 {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #fafaf9;
-  margin-bottom: 0.5rem;
-}
-
-.card-content p {
-  color: #a8a29e;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  max-width: 400px;
-}
-
-/* CARD DE MASSAGEM — layout flex interno */
-.massage-content {
+.wellness-card-copy {
+  padding: 25px 25px 29px;
   position: relative;
-  z-index: 5;
-  width: 100%;
-  padding: 1.5rem;
+  min-height: 166px;
+}
+.wellness-card h3 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.wellness-card-copy p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 85%;
+}
+.wellness-link {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+.wellness-link:hover {
+  background: var(--pine);
+  color: var(--mineral);
+}
+.wellness-link .icon {
+  width: 17px;
+  height: 17px;
+}
+.wellness-note {
   display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+  align-items: start;
+  gap: 9px;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-top: 25px;
 }
-
-@media (min-width: 768px) {
-  .massage-content {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem 3rem;
+.wellness-note .icon {
+  width: 16px;
+  height: 16px;
+}
+@media (max-width: 900px) {
+  .wellness-grid {
+    gap: 16px;
+  }
+  .wellness-card-copy {
+    padding: 20px 18px 24px;
+    min-height: 190px;
+  }
+  .wellness-link {
+    position: static;
+    margin-top: 18px;
+  }
+  .wellness-card-copy p {
+    max-width: none;
+  }
+  .wellness-image > span {
+    top: 10px;
+    left: 10px;
+    font-size: 6px;
   }
 }
-
-.massage-text h3 {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #fafaf9;
-  margin-bottom: 0.4rem;
-}
-
-@media (min-width: 768px) {
-  .massage-text h3 {
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
+@media (max-width: 600px) {
+  .wellness-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
   }
-}
-
-.massage-text .spa-label {
-  color: #34d399;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: 0.4rem;
-}
-
-.massage-text p {
-  color: #a8a29e;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  max-width: 420px;
-}
-
-/* DISCLAIMER BOX */
-.disclaimer-box {
-  background-color: rgba(28, 25, 23, 0.8);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(120, 113, 108, 0.3);
-  padding: 1rem;
-  border-radius: 12px;
-  flex-shrink: 0;
-  width: 100%;
-}
-
-@media (min-width: 768px) {
-  .disclaimer-box {
-    max-width: 280px;
-    padding: 1.25rem;
+  .wellness-image {
+    aspect-ratio: 1.32;
   }
-}
-
-.disclaimer-box .disclaimer-label {
-  color: #34d399;
-  font-size: 0.7rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.3rem;
-}
-
-.disclaimer-box p {
-  color: #78716c;
-  font-size: 0.7rem;
-  line-height: 1.5;
+  .wellness-card-copy {
+    padding: 24px;
+    min-height: 156px;
+  }
+  .wellness-card-copy p {
+    max-width: 85%;
+  }
+  .wellness-link {
+    position: absolute;
+    top: 22px;
+    right: 20px;
+    margin: 0;
+  }
+  .wellness-image > span {
+    font-size: 8px;
+    top: 18px;
+    left: 18px;
+  }
 }

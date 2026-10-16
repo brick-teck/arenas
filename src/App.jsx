@@ -1,23 +1,28 @@
-import Header from './components/Header'
-import Hero from './components/Hero'
-import Activities from './components/Activities'
-import Wellness from './components/Wellness'
-import About from './components/About'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Activities from "./components/Activities";
+import Wellness from "./components/Wellness";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div>
+    <>
+      <a className="skip-link" href="#conteudo">
+        Pular para o conteúdo
+      </a>
       <Header />
-      <Hero />
-      <Activities />
-      <Wellness />
-      <About />
-      <Contact />
+      <main id="conteudo">
+        <Hero />
+        <Activities />
+        <Wellness />
+        <About />
+        <Contact />
+      </main>
       <Footer />
-    </div>
-  )
+    </>
+  );
 }
 
-export default App
+export default App;

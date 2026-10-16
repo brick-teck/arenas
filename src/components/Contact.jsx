@@ -1,142 +1,204 @@
-import { useState } from 'react';
-import './Contact.css';
+import { useRef, useState } from "react";
+import Icon from "./Icon";
+import "./Contact.css";
+
+const interests = [
+  ["futevolei", "Futevôlei"],
+  ["beach-tennis", "Beach Tennis"],
+  ["tenis", "Tênis"],
+  ["pickleball", "Pickleball"],
+  ["academia", "Academia"],
+  ["pilates", "Pilates"],
+  ["massagem", "Massagem"],
+  ["geral", "Conhecer o clube"],
+];
+const fields = [
+  {
+    name: "nome",
+    label: "Nome completo",
+    placeholder: "Como podemos chamar você?",
+    type: "text",
+    autoComplete: "name",
+  },
+  {
+    name: "email",
+    label: "E-mail",
+    placeholder: "voce@exemplo.com",
+    type: "email",
+    autoComplete: "email",
+  },
+  {
+    name: "telefone",
+    label: "Telefone",
+    placeholder: "(11) 98765-4321",
+    type: "tel",
+    autoComplete: "tel",
+  },
+];
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    nome: '',
-    email: '',
-    telefone: '',
-    atividade: '',
+  const [values, setValues] = useState({
+    nome: "",
+    email: "",
+    telefone: "",
+    atividade: "",
   });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const [errors, setErrors] = useState({});
+  const [review, setReview] = useState(false);
+  const form = useRef(null);
+  const status = useRef(null);
+  const change = (event) => {
+    const { name, value } = event.target;
+    setValues((previous) => ({ ...previous, [name]: value }));
+    setErrors((previous) => ({ ...previous, [name]: "" }));
+    setReview(false);
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Obrigado, ${formData.nome}! Entraremos em contato em breve.`);
+  const submit = (event) => {
+    event.preventDefault();
+    const next = {};
+    if (values.nome.trim().length < 2)
+      next.nome = "Informe seu nome com pelo menos 2 caracteres.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim()))
+      next.email = "Informe um e-mail válido, como voce@exemplo.com.";
+    if (
+      !/^\+?[\d\s().-]+$/.test(values.telefone) ||
+      ![10, 11].includes(
+        values.telefone.replace(/\D/g, "").replace(/^55(?=\d{10,11}$)/, "")
+          .length,
+      )
+    )
+      next.telefone = "Informe um telefone com DDD e 10 ou 11 dígitos.";
+    if (!interests.some(([id]) => id === values.atividade))
+      next.atividade = "Escolha uma modalidade ou selecione Conhecer o clube.";
+    setErrors(next);
+    if (Object.keys(next).length) {
+      form.current.elements.namedItem(Object.keys(next)[0])?.focus();
+      return;
+    }
+    setReview(true);
+    requestAnimationFrame(() => status.current?.focus());
   };
-
   return (
-    <section id="contato" className="contact">
-      <div className="contact-container">
-
-        {/* LADO ESQUERDO — texto + infos */}
+    <section
+      id="contato"
+      className="contact section-space"
+      aria-labelledby="contact-title"
+    >
+      <div className="container contact-container">
         <div className="contact-info">
-          <span className="contact-label">Contato</span>
-          <h2 className="contact-title">
-            Pronto para começar sua <span>evolução?</span>
+          <p className="eyebrow">SEU PRÓXIMO BOM HÁBITO</p>
+          <h2 id="contact-title">
+            A sua nova rotina
+            <br />
+            <span>começa por aqui.</span>
           </h2>
-          <p className="contact-desc">
-            Preencha o formulário e nossa equipe entrará em contato para agendar
-            sua visita ao Vila Reserva Sports.
+          <p>
+            Que tal conhecer o seu próximo lugar favorito? Escolha o que mais
+            combina com você e planeje sua visita.
           </p>
-
-          <div className="contact-items">
-            {/* Telefone */}
-            <div className="contact-item">
-              <div className="contact-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-                </svg>
-              </div>
-              <span className="contact-item-text">(11) 99999-9999</span>
-            </div>
-
-            {/* Email */}
-            <div className="contact-item">
-              <div className="contact-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="4" width="20" height="16" rx="2" />
-                  <path d="M22 7l-10 6L2 7" />
-                </svg>
-              </div>
-              <span className="contact-item-text">contato@vilareserva.com.br</span>
-            </div>
-
-            {/* Localização */}
-            <div className="contact-item">
-              <div className="contact-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-              </div>
-              <span className="contact-item-text">São Paulo, SP</span>
-            </div>
+          <div className="contact-invitation">
+            <Icon name="leaf" />
+            <span>
+              Traga a vontade de se movimentar.
+              <br />
+              <strong>O seu espaço está aqui.</strong>
+            </span>
           </div>
+          <p className="contact-demo-note">
+            Este formulário é demonstrativo. Você pode conferir suas
+            informações, mas nenhum pedido será enviado ou agendado.
+          </p>
         </div>
-
-        {/* LADO DIREITO — formulário */}
-        <form className="contact-form" onSubmit={handleSubmit}>
-
-          <div className="form-group">
-            <label htmlFor="nome">Nome</label>
-            <input
-              type="text"
-              id="nome"
-              name="nome"
-              placeholder="Seu nome completo"
-              value={formData.nome}
-              onChange={handleChange}
-              required
-            />
+        <form
+          ref={form}
+          className="contact-form"
+          onSubmit={submit}
+          noValidate
+          aria-label="Planejar visita"
+        >
+          <div className="form-heading">
+            <span className="eyebrow">VAMOS NOS CONHECER?</span>
+            <h3>Planeje sua visita</h3>
+            <p>Todos os campos são obrigatórios.</p>
           </div>
-
+          {fields.map(({ label, ...field }) => (
+            <div className="form-group" key={field.name}>
+              <label htmlFor={field.name}>{label}</label>
+              <input
+                {...field}
+                id={field.name}
+                value={values[field.name]}
+                onChange={change}
+                required
+                aria-invalid={Boolean(errors[field.name])}
+                aria-describedby={
+                  errors[field.name] ? `${field.name}-error` : undefined
+                }
+              />
+              <span className="field-error" id={`${field.name}-error`}>
+                {errors[field.name] || ""}
+              </span>
+            </div>
+          ))}
           <div className="form-group">
-            <label htmlFor="email">E-mail</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="seu@email.com"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="telefone">Telefone</label>
-            <input
-              type="tel"
-              id="telefone"
-              name="telefone"
-              placeholder="(00) 00000-0000"
-              value={formData.telefone}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="atividade">Interesse</label>
+            <label htmlFor="atividade">Tenho interesse em</label>
             <select
               id="atividade"
               name="atividade"
-              value={formData.atividade}
-              onChange={handleChange}
+              value={values.atividade}
+              onChange={change}
               required
+              aria-invalid={Boolean(errors.atividade)}
+              aria-describedby={
+                errors.atividade ? "atividade-error" : undefined
+              }
             >
-              <option value="" disabled>Selecione uma atividade</option>
-              <option value="futevolei">Futevôlei</option>
-              <option value="beach-tennis">Beach Tennis</option>
-              <option value="tenis">Tênis</option>
-              <option value="pickleball">Pickleball</option>
-              <option value="academia">Academia</option>
-              <option value="pilates">Pilates</option>
-              <option value="massagem">Massagem</option>
-              <option value="geral">Conhecer o clube</option>
+              <option value="">Selecione uma opção</option>
+              {interests.map(([id, name]) => (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              ))}
             </select>
+            <span className="field-error" id="atividade-error">
+              {errors.atividade || ""}
+            </span>
           </div>
-
-          <button type="submit" className="form-submit">
-            Enviar Mensagem
+          <button type="submit" className="button button-pine form-submit">
+            Conferir minha visita <Icon name="arrow" />
           </button>
-
+          <p className="form-note">Prévia da visita · sem envio de dados</p>
+          {review && (
+            <div
+              ref={status}
+              role="status"
+              tabIndex="-1"
+              className="form-review"
+            >
+              <Icon name="check" />
+              <div>
+                <strong>{values.nome.trim()}, confira seu interesse:</strong>
+                <p>
+                  {interests.find(([id]) => id === values.atividade)?.[1]} ·{" "}
+                  {values.email.trim()}
+                </p>
+                <p>
+                  Este pedido não foi enviado. O agendamento ainda não está
+                  disponível nesta demonstração.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setReview(false);
+                    form.current.elements.namedItem("nome")?.focus();
+                  }}
+                >
+                  Editar informações
+                </button>
+              </div>
+            </div>
+          )}
         </form>
-
       </div>
     </section>
   );
